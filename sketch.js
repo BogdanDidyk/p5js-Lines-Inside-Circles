@@ -51,16 +51,12 @@ function getRandomCircle(randomCircleOptions = {}) {
     );
 }
 
-function getArrayOfLength(length) {
-    return Array.from({length});
-}
-
 function createColors(count) {
-    return getArrayOfLength(count).map(() => getRandomRGBA());
+    return Array.from({length: count}, () => getRandomRGBA());
 }
 
 function createCircles(count, randomCircleOptions) {
-    return getArrayOfLength(count).map(() => getRandomCircle(randomCircleOptions));
+    return Array.from({length: count}, () => getRandomCircle(randomCircleOptions));
 }
 
 function getDifferentCircles() {
