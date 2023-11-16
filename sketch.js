@@ -1,15 +1,21 @@
+const regenerateButton = document.getElementById("regenerate-button");
+const backgroundColor = getComputedStyle(document.body).getPropertyValue('background-color');
+
+regenerateButton.addEventListener("click", function () {
+    initialize();
+    loop();
+});
+
 let circles;
 let minSize;
 
 function setup() {
-    createCanvas(500, 500);
-    background("#1c1c1c");
+    createCanvasInside("canvas");
     frameRate(10);
     angleMode(DEGREES);
 
     minSize = (width < height) ? width : height;
-    circles = getDifferentCircles();
-    setTimeout(() => noLoop(), random(1.5, 3.5) * 1000);
+    initialize();
 }
 
 function draw() {
@@ -19,6 +25,23 @@ function draw() {
         const p2 = circle.getPointLiesOnCircle(random(361));
         line(p1.x, p1.y, p2.x, p2.y);
     });
+}
+
+function createCanvasInside(containerId) {
+    const container = document.getElementById(containerId);
+    const canvas = createCanvas(container.clientWidth, container.clientHeight);
+    canvas.parent(containerId);
+}
+
+function initialize() {
+    background(backgroundColor);
+    regenerateButton.disabled = true;
+    circles = getDifferentCircles();
+    
+    setTimeout(() => {
+        noLoop();
+        regenerateButton.disabled = false;
+    }, random(1.5, 3.5) * 1000);
 }
 
 function getRandomRGBA(alphaFrom = 0.7, alphaTo = 1) {
